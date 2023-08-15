@@ -1,0 +1,57 @@
+Script started on 2023-08-15 14:58:16+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="188" LINES="15"]
+[0;32mdefault[0m [0;90m->[0m [0;32m16.20[0m ([0;90m->[0m [0;32mv16.20.1[0m)
+Now using node v16.20.1 (npm v8.19.4)
+]0;Numbers00@BaseUbuntu22: ~/Personal/GitHub/part12-containers-applications[01;32mNumbers00@BaseUbuntu22[00m:[01;34m~/Personal/GitHub/part12-containers-applications[00m$ docker run -it ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+
+[1A[2K
+3153aa388d02: Pulling fs layer 
+[1B[1A[2K
+3153aa388d02: Downloading [>                                                  ]  311.3kB/29.53MB
+[1B[1A[2K
+3153aa388d02: Downloading [===========================>                       ]   16.1MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Verifying Checksum 
+[1B[1A[2K
+3153aa388d02: Download complete 
+[1B[1A[2K
+3153aa388d02: Extracting [>                                                  ]  327.7kB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [=========>                                         ]  5.571MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [================>                                  ]   9.83MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [==========================>                        ]  15.73MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [=====================================>             ]  22.28MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [===========================================>       ]  25.89MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [=================================================> ]  29.16MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Extracting [==================================================>]  29.53MB/29.53MB
+[1B[1A[2K
+3153aa388d02: Pull complete 
+[1BDigest: sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a3dd7f508
+Status: Downloaded newer image for ubuntu:latest
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# mkdir       ls
+[?2004l
+[0m[01;36mbin[0m  [01;34mboot[0m  [01;34mdev[0m  [01;34metc[0m  [01;34mhome[0m  [01;36mlib[0m  [01;36mlib32[0m  [01;36mlib64[0m  [01;36mlibx32[0m  [01;34mmedia[0m  [01;34mmnt[0m  [01;34mopt[0m  [01;34mproc[0m  [01;34mroot[0m  [01;34mrun[0m  [01;36msbin[0m  [01;34msrv[0m  [01;34msys[0m  [30;42mtmp[0m  [01;34musr[0m  [01;34mvar[0m
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# mkdir p -p /usrsc r  /src/app
+[?2004l
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# ls /usr/r src
+[?2004l
+[0m[01;34mapp[0m
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# touch /usr/src/app/index.js
+[?2004l
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# [Kls / /usr/src/app
+[?2004l
+index.js
+[?2004h]0;root@d7c82aef0780: /root@d7c82aef0780:/# exit
+[?2004l
+exit
+]0;Numbers00@BaseUbuntu22: ~/Personal/GitHub/part12-containers-applications[01;32mNumbers00@BaseUbuntu22[00m:[01;34m~/Personal/GitHub/part12-containers-applications[00m$ exit
+exit
+
+Script done on 2023-08-15 15:00:34+00:00 [COMMAND_EXIT_CODE="0"]
