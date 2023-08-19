@@ -1,0 +1,26 @@
+version: '3.8'
+
+# MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+# docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container id/name>
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: root
+      MONGODB_INITDB_ROOT_PASSWORD: example
+      MONGODB_INITDB_DATABASE: the_database
+    volumes:
+      # bound mounts https://docs.docker.com/storage/bind-mounts/
+      # a type of volume, remove with --volume when running docker compose down
+      # changes in either file reflects the other
+
+      # js files in docker-entrypoint-initdb.d are run when first starting the container
+      # <local file>:<file in container>
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./mongo_data:/data/db
+
+volumes:
+  mongo_data:

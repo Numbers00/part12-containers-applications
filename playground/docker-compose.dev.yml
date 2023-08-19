@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      # creates user with root role, which is a superuser role
+      MONGODB_INITDB_ROOT_USERNAME: root
+      MONGODB_INITDB_ROOT_PASSWORD: example
+      MONGODB_INITDB_DATABASE: the_database

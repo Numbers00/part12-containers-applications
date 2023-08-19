@@ -1,3 +1,6 @@
+// default db is "test"
+db = db.getSiblingDB('the_database');
+
 db.createUser({
   user: 'the_username',
   pwd: 'the_password',
@@ -11,5 +14,6 @@ db.createUser({
 
 db.createCollection('todos');
 
-db.todos.insert({ text: 'Write code', done: true });
-db.todos.insert({ text: 'Learn about containers', done: false });
+// .insert() is deprecated
+db.todos.insertOne({ text: 'Write code', done: true });
+db.todos.insertOne({ text: 'Learn about containers', done: false });
