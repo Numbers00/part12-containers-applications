@@ -15,9 +15,9 @@ services:
     env_file:
       - .env
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: the_database
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
       # bound mounts https://docs.docker.com/storage/bind-mounts/
       # a type of volume, remove with --volume when running docker compose down
@@ -27,6 +27,12 @@ services:
       # <local file>:<file in container>
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - ./mongo_data:/data/db
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: redis-server --loglevel warning
+
 
 volumes:
   mongo_data:
