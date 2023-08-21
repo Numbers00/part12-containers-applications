@@ -63,3 +63,7 @@ typings/
 
 # mongo container volume
 mongo_data
+
+
+# redis container volume
+redis_data

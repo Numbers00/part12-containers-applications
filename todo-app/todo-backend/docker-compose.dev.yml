@@ -26,13 +26,18 @@ services:
       # js files in docker-entrypoint-initdb.d are run when first starting the container
       # <local file>:<file in container>
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      - ./mongo_data:/data/db
+      - mongo_data:/data/db
   redis:
     image: redis:latest
     ports:
       - 6379:6379
-    command: redis-server --loglevel warning
+    # --appendonly yes: enable AOF persistence
+    # --loglevel warning: log only warnings and errors
+    command: redis-server --appendonly yes --loglevel warning
+    volumes:
+      - redis_data:/data
 
 
 volumes:
   mongo_data:
+  redis_data:
