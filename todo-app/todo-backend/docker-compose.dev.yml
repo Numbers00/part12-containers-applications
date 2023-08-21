@@ -3,15 +3,21 @@ version: '3.8'
 # MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
 # docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container id/name>
 
+# run with: docker compose --env-file .env -f docker-compose.dev.yml up
+# down with: docker compose -f docker-compose.dev.yml down --volumes
+# remove volume with: sudo rm -rf mongo_data
+
 services:
   mongodb:
-    image: mongo
+    image: mongo:latest
     ports:
       - 3456:27017
+    env_file:
+      - .env
     environment:
-      MONGODB_INITDB_ROOT_USERNAME: root
-      MONGODB_INITDB_ROOT_PASSWORD: example
-      MONGODB_INITDB_DATABASE: the_database
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
     volumes:
       # bound mounts https://docs.docker.com/storage/bind-mounts/
       # a type of volume, remove with --volume when running docker compose down

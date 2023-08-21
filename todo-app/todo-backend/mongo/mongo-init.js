@@ -1,5 +1,7 @@
 // default db is "test"
-db = db.getSiblingDB('the_database');
+// env var used to be MONGODB_INITDB_DATABASE, should have been MONGO_
+// now "the_database" is used as default
+// db = db.getSiblingDB('the_database');
 
 db.createUser({
   user: 'the_username',
