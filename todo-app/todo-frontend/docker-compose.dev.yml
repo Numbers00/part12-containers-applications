@@ -1,0 +1,11 @@
+services:
+  app:
+    image: dev-todo-frontend
+    build:
+      context: . # current directory is set as "build context"
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app # if done in CLI instead, has to be an absolute path
+    ports:
+      - 3001:3000
+    container_name: dev-todo-frontend
