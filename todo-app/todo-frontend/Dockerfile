@@ -1,4 +1,4 @@
-FROM node:16 AS build-stage
+FROM node:16 AS base-stage
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,26 @@ RUN npm ci
 
 ENV REACT_APP_BACKEND_URL=http://localhost:3000
 
+
+# new stage, everything before this is gone
+# the test-stage is not used in the final stage
+# hence it is not shown in the logs when running
+# docker build
+
+# also, estimated time for tests is only 2s
+FROM base-stage AS test-stage
+
+# RUN stops the image building process if the command fails
+
+# CMD does not stop the image building process if the command fails
+# and is run instead when the image is run
+RUN CI=true npm test
+
+
+FROM base-stage AS build-stage
+
 RUN npm run build
+
 
 # This is a new stage, everything before this is gone, except the files we want to COPY
 FROM nginx:1.20-alpine
