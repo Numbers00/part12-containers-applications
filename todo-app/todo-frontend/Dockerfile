@@ -7,7 +7,8 @@ COPY . .
 
 RUN npm ci
 
-ENV REACT_APP_BACKEND_URL=http://localhost:3000
+# move (later) REACT_APP_BACKEND_URL to ../.env
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/api
 
 
 # new stage, everything before this is gone

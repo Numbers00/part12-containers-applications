@@ -1,36 +1,27 @@
 version: '3.8'
-# ports are removed for frontend and backend
-# reverse proxy handles requests to them
 
 services:
   app:
-    image: dev-todo-frontend
+    image: todo-frontend
     env_file:
       - .env
     build:
       context: ./todo-frontend
-      dockerfile: dev.Dockerfile
-      args:
-        - REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
-    volumes:
-      - ./todo-frontend:/usr/src/app
-    container_name: dev-todo-frontend
+      dockerfile: Dockerfile
+    container_name: todo-frontend
     depends_on:
       - server
-  # docker compose -f docker-compose.dev.yml run debug-helper wget -O - http://app:3000
-  # or e.g., http://server:3000/todos for server's todos route
-  debug-helper:
-    image: busybox
   server:
-    image: dev-todo-backend
+    image: todo-backend
     build:
       context: ./todo-backend
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
     env_file:
       - .env
     environment:
-      - MONGO_URL=${MONGO_URL}
-      - REDIS_URL=${REDIS_URL}
+      MONGO_URL: ${MONGO_URL}
+      REDIS_URL: ${REDIS_URL}
+    container_name: todo-backend
     depends_on:
       - mongodb
       - redis
@@ -53,6 +44,7 @@ services:
       # <local file>:<file in container>
       - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - ./todo-backend/mongo_data:/data/db
+    container_name: todo-app-mongodb
   redis:
     image: redis:latest
     ports:
@@ -62,11 +54,12 @@ services:
     command: redis-server --appendonly yes --loglevel warning
     volumes:
       - ./todo-backend/redis_data:/data
+    container_name: todo-app-redis
   nginx:
     image: nginx:1.20.1
     volumes:
       # ro means read only
-      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
     container_name: reverse-proxy
