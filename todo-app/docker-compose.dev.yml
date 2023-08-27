@@ -1,16 +1,67 @@
+version: '3.8'
+# ports are removed for frontend and backend
+# reverse proxy handles requests to them
+
 services:
   app:
     image: dev-todo-frontend
+    env_file:
+      - .env
     build:
-      context: todo-frontend
+      context: ./todo-frontend
       dockerfile: dev.Dockerfile
+      args:
+        - REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
     volumes:
       - ./todo-frontend:/usr/src/app
-    ports:
-      - 3001:3000
     container_name: dev-todo-frontend
+    depends_on:
+      - server
+  # docker compose -f docker-compose.dev.yml run debug-helper wget -O - http://app:3000
+  # or e.g., http://server:3000/todos for server's todos route
   debug-helper:
     image: busybox
+  server:
+    image: dev-todo-backend
+    build:
+      context: ./todo-backend
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env
+    environment:
+      - MONGO_URL=${MONGO_URL}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - mongodb
+      - redis
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 3456:27017
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      # bound mounts https://docs.docker.com/storage/bind-mounts/
+      # a type of volume, remove with --volume when running docker compose down
+      # changes in either file reflects the other
+
+      # js files in docker-entrypoint-initdb.d are run when first starting the container
+      # <local file>:<file in container>
+      - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./todo-backend/mongo_data:/data/db
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    # --appendonly yes: enable AOF persistence
+    # --loglevel warning: log only warnings and errors
+    command: redis-server --appendonly yes --loglevel warning
+    volumes:
+      - ./todo-backend/redis_data:/data
   nginx:
     image: nginx:1.20.1
     volumes:
@@ -21,4 +72,9 @@ services:
     container_name: reverse-proxy
     depends_on:
       - app # wait for frontend container to be started
+      - server # wait for backend container to be started
 
+
+volumes:
+  mongo_data:
+  redis_data:
