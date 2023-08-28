@@ -1,0 +1,14 @@
+**/build
+**/dist
+**/.env
+**/node_modules
+
+**/dev.Dockerfile
+**/Dockerfile
+docker-compose.dev.yml
+docker-compose.yml
+
+**/.git
+**/.gitignore
+.git
+.gitignore

@@ -1,2 +1,4 @@
 # Ignore all .env files in any subdirectory at any depth level
 **/.env
+
+**/build
